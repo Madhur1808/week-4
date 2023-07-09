@@ -5,6 +5,8 @@ import "./App.css";
 
 let App = function App() {
   const [todos, setTodos] = useState([]);
+  const [description, setDescription] = useState();
+  const [title, setTitle] = useState();
   // fetch all todos from server
   useEffect(() => {
     axios.get("http://localhost:3000/todos").then((response) => {
@@ -34,13 +36,17 @@ let App = function App() {
             placeholder="title"
             type="text"
             title={title}
-            onChange={changehandler}
+            onChange={() => {
+              setTitle(e.target.value);
+            }}
           />
           <input
             placeholder="description"
             type="text"
             description={description}
-            onChange={changehandler}
+            onChange={() => {
+              setDescription(e.target.value);
+            }}
           />
           <button onClick={addtodo}>Add Todo</button>
         </div>
