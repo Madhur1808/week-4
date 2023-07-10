@@ -10,9 +10,17 @@ let App = function App() {
   // fetch all todos from server
   useEffect(() => {
     axios.get("http://localhost:3000/todos").then((response) => {
+      console.log(response);
       setTodos(response.data);
     });
   }, []);
+
+  const deleteTodohandler = () => {
+    axios.delete("http://localhost:3000/todos/13").then((response) => {
+      console.log(response);
+      setTodos(...todos);
+    });
+  };
 
   if (!todos) {
     return <div>No todos present</div>;
@@ -27,7 +35,7 @@ let App = function App() {
             <div>
               <span>title:{todo.title}</span>
               <span>Description:{todo.description}</span>
-              <button>Delete</button>
+              <button onClick={deleteTodohandler}>Delete</button>
             </div>
           );
         })}
@@ -48,7 +56,7 @@ let App = function App() {
               setDescription(e.target.value);
             }}
           />
-          <button onClick={addtodo}>Add Todo</button>
+          <button>Add Todo</button>
         </div>
       </div>
     </>
