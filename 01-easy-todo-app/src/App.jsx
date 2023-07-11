@@ -3,62 +3,124 @@ import axios from "axios";
 
 import "./App.css";
 
+import { TextField, Button, Typography, Card, Box } from "@mui/material";
+
 let App = function App() {
   const [todos, setTodos] = useState([]);
-  const [description, setDescription] = useState();
-  const [title, setTitle] = useState();
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+
   // fetch all todos from server
   useEffect(() => {
     axios.get("http://localhost:3000/todos").then((response) => {
-      console.log(response);
+      // console.log(response);
       setTodos(response.data);
     });
   }, []);
 
-  const deleteTodohandler = () => {
-    axios.delete("http://localhost:3000/todos/13").then((response) => {
-      console.log(response);
-      setTodos(...todos);
-    });
+  const deleteTodohandler = (todoId) => {
+    console.log(todoId);
+    axios
+      .delete(`http://localhost:3000/todos/${todoId}`)
+      .then((response) => {
+        // console.log(response);
+        setTodos(todos.filter((todo) => todo.id !== todoId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  if (!todos) {
-    return <div>No todos present</div>;
-  }
+  const posttodohanlder = () => {
+    console.log(title, description);
+    axios
+      .post("http://localhost:3000/todos", {
+        title: title,
+        description,
+      })
+      .then((response) => {
+        const updatedtodos = [...todos, response.data];
+        setTodos(updatedtodos);
+        setTitle("");
+        setDescription("");
+      })
+      .catch((error) => {
+        consosle.log(error);
+      });
+  };
+  // if (!todos) {
+  //   return <div>No todos present</div>;
+  // }
 
   return (
     <>
-      <div>
-        <h1>Easy Todo App</h1>
-        {todos.map((todo) => {
-          return (
-            <div>
-              <span>title:{todo.title}</span>
-              <span>Description:{todo.description}</span>
-              <button onClick={deleteTodohandler}>Delete</button>
-            </div>
-          );
-        })}
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <Typography variant="h3" sx={{ marginBottom: 2 }}>
+          Easy Todo App
+        </Typography>
+
         <div>
-          <input
-            placeholder="title"
+          <TextField
+            sx={{ height: 10, marginRight: 1 }}
+            id="outlined-basic"
+            label="Title"
+            variant="outlined"
             type="text"
-            title={title}
-            onChange={() => {
+            value={title}
+            onChange={(e) => {
               setTitle(e.target.value);
             }}
           />
-          <input
-            placeholder="description"
+          <TextField
+            sx={{ height: 10, marginRight: 1 }}
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
             type="text"
-            description={description}
-            onChange={() => {
+            value={description}
+            onChange={(e) => {
               setDescription(e.target.value);
             }}
           />
-          <button>Add Todo</button>
+          <Button
+            sx={{ height: 55, padding: 3 }}
+            variant="contained"
+            onClick={posttodohanlder}
+          >
+            Add Todo
+          </Button>
         </div>
-      </div>
+        {/* <Typography variant="h5">Here is your todos</Typography> */}
+        <Box sx={{ marginTop: 2 }}>
+          {todos.map((todo) => {
+            return (
+              <Card
+                sx={{
+                  width: 600,
+                  display: "flex",
+                  justifyContent: "space-around",
+                  padding: 1,
+                  marginBottom: 1,
+                }}
+              >
+                <Typography sx={{ fontWeight: "bold" }}>
+                  {todo.title}
+                </Typography>
+                <Typography>{todo.description}</Typography>
+                <Button
+                  onClick={() => {
+                    deleteTodohandler(todo.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </Card>
+            );
+          })}
+        </Box>
+      </Box>
     </>
   );
 };
