@@ -45,7 +45,7 @@ let App = function App() {
         setDescription("");
       })
       .catch((error) => {
-        consosle.log(error);
+        console.log(error);
       });
   };
   // if (!todos) {
@@ -57,7 +57,7 @@ let App = function App() {
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
-        <Typography variant="h3" sx={{ marginBottom: 2 }}>
+        <Typography variant="h4" sx={{ marginBottom: 2 }}>
           Easy Todo App
         </Typography>
 
