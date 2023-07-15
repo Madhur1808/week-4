@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
+
 import {
   Card,
   Typography,
@@ -14,6 +16,26 @@ import {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const loginHandler = () => {
+    axios
+      .post("http://localhost:3000/admin/login", null, {
+        headers: {
+          username: email,
+          password,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        alert(response.data.message);
+        localStorage.setItem("token", response.data.token);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.response.data.message);
+      });
+  };
 
   return (
     <Box
@@ -66,14 +88,16 @@ function Login() {
         />
         <TextField
           label="Password"
-          type="text"
+          type="password"
           sx={{ width: 300 }}
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" onClick={loginHandler}>
+          Login
+        </Button>
       </Card>
     </Box>
   );

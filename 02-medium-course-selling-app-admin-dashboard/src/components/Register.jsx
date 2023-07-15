@@ -26,6 +26,9 @@ function Register() {
         console.log(response);
         alert(response.data.message);
         localStorage.setItem("token", response.data.token);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
