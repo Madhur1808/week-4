@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -16,6 +17,7 @@ import {
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const naviagte = useNavigate();
 
   const loginHandler = () => {
     axios
@@ -29,6 +31,7 @@ function Login() {
         console.log(response);
         alert(response.data.message);
         localStorage.setItem("token", response.data.token);
+        naviagte("/");
       })
       .catch((error) => {
         console.log(error);

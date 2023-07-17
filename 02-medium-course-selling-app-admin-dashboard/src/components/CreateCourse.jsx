@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 /// You need to add input boxes to take input for users to create a course.
 /// I've added one input so you understand the api to do it.
-function CreateCourse() {
+function CreateCourse({ useremail }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  console.log({ useremail });
 
   const addCourseHandler = () => {
     axios
@@ -42,6 +44,10 @@ function CreateCourse() {
       });
   };
 
+  const logoutHandler = () => {
+    localStorage.setItem("token", null);
+  };
+
   return (
     <div>
       <Box
@@ -64,7 +70,10 @@ function CreateCourse() {
           <Typography sx={{ padding: 2, fontWeight: "bold", fontSize: "20px" }}>
             COURSESITE{" "}
           </Typography>
-          <Button variant="outline" color="inherit">
+          <Typography sx={{ padding: 2, fontWeight: "bold", fontSize: "20px" }}>
+            AdminName:{useremail}
+          </Typography>
+          <Button variant="outline" color="inherit" onClick={logoutHandler}>
             <Link href="/login" underline="none" sx={{ color: "white" }}>
               LOGOUT
             </Link>
@@ -103,6 +112,11 @@ function CreateCourse() {
           />
           <Button variant="contained" onClick={addCourseHandler}>
             ADD COURSE
+          </Button>
+          <Button variant="outlined">
+            <Link underline="none" href="/courses">
+              GET COURSES
+            </Link>
           </Button>
         </Card>
       </Box>
