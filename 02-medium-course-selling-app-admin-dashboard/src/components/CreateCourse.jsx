@@ -14,6 +14,7 @@ import {
 function CreateCourse({ useremail }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
   console.log({ useremail });
 
@@ -25,7 +26,7 @@ function CreateCourse({ useremail }) {
           title,
           description,
           price: 5999,
-          imageLink: "",
+          imageLink: image,
           published: true,
         },
         {
@@ -108,6 +109,15 @@ function CreateCourse({ useremail }) {
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
+            }}
+          />
+          <TextField
+            label="ImageLink"
+            type="text"
+            sx={{ width: 300 }}
+            value={image}
+            onChange={(e) => {
+              setImage(e.target.value);
             }}
           />
           <Button variant="contained" onClick={addCourseHandler}>
