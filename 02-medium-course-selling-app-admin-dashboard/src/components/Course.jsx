@@ -35,7 +35,7 @@ const Course = () => {
   if (!course) {
     return <div>Loading...</div>;
   }
-  console.log(course.title, course.description);
+  // console.log(course.title, course.description);
   return (
     <div>
       <Appbar />
