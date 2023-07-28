@@ -27,44 +27,8 @@ function ShowCourses() {
     fetchCourse();
   }, []);
 
-  // Add code to fetch courses from the server
-  // and set it in the courses state variable.
   return (
     <Box>
-      {/* <AppBar
-        sx={{
-          display: "flex",
-          width: "100vw",
-          height: "60px",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography sx={{ padding: 2, fontWeight: "bold", fontSize: "20px" }}>
-          COURSESITE{" "}
-        </Typography>
-        <Typography sx={{ padding: 2, fontWeight: "bold", fontSize: "20px" }}>
-          AdminName:
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Button variant="contained" color="inherit">
-            <Link href="/" underline="none">
-              ADD COURSE
-            </Link>
-          </Button>
-          <Button variant="outline" color="inherit" onClick={logoutHandler}>
-            <Link href="/login" underline="none" sx={{ color: "white" }}>
-              LOGOUT
-            </Link>
-          </Button>
-        </Box>
-      </AppBar> */}
       <Appbar />
       <Typography variant="h5" sx={{ marginTop: "90px" }}>
         All Courses
