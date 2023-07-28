@@ -86,11 +86,12 @@ function ShowCourses() {
 }
 
 export function Coursecard(props) {
+  // console.log(props);
   return (
     <Card
       sx={{
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
