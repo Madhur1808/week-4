@@ -10,19 +10,22 @@ function Landing() {
   const [useremail, setUseremail] = useState(null);
   useEffect(() => {
     // console.log(localStorage.getItem("token"));
-    axios
-      .get("http://localhost:3000/admin/me/", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
+
+    const fetchMe = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/admin/me/", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+
         // console.log(response.data);
         if (response.data.username) setUseremail(response.data.username);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+    fetchMe();
   }, []);
 
   if (useremail) {

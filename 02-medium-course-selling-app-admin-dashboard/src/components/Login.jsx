@@ -19,24 +19,27 @@ function Login() {
   const [password, setPassword] = useState("");
   const naviagte = useNavigate();
 
-  const loginHandler = () => {
-    axios
-      .post("http://localhost:3000/admin/login", null, {
-        headers: {
-          username: email,
-          password,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        alert(response.data.message);
-        localStorage.setItem("token", response.data.token);
-        naviagte("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error.response.data.message);
-      });
+  const loginHandler = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/admin/login",
+        null,
+        {
+          headers: {
+            username: email,
+            password,
+          },
+        }
+      );
+
+      console.log(response);
+      alert(response.data.message);
+      localStorage.setItem("token", response.data.token);
+      naviagte("/");
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.message);
+    }
   };
 
   return (

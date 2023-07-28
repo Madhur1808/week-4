@@ -16,20 +16,19 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const registerHandler = () => {
-    axios
-      .post("http://localhost:3000/admin/signup", {
+  const registerHandler = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/admin/signup", {
         username: email,
         password,
-      })
-      .then((response) => {
-        console.log(response);
-        alert(response.data.message);
-        localStorage.setItem("token", response.data.token);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+
+      console.log(response);
+      alert(response.data.message);
+      localStorage.setItem("token", response.data.token);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

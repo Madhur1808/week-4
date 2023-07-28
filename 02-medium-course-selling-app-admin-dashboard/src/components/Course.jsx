@@ -12,19 +12,24 @@ const Course = () => {
   const { courseId } = useParams();
   const [courses, setCourses] = useState([]);
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/admin/courses", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/admin/courses",
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+
         console.log(response);
         setCourses(response.data.courses);
-      })
-      .then((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   console.log(courses);
@@ -64,9 +69,9 @@ const UpdateCard = (props) => {
   const courseId = course.id;
   // console.log(courseId);
   // console.log(course);
-  const updateCourseHandler = () => {
-    axios
-      .put(
+  const updateCourseHandler = async () => {
+    try {
+      const response = await axios.put(
         `http://localhost:3000/admin/courses/${courseId}`,
         {
           title,
@@ -80,34 +85,33 @@ const UpdateCard = (props) => {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
-      )
-      .then((response) => {
-        console.log(response);
-        // alert(response.data.message);
+      );
 
-        let updatedCourses = [];
+      console.log(response);
+      // alert(response.data.message);
 
-        for (let i = 0; i < props.courses.length; i++) {
-          if (props.courses[i].id === courseId) {
-            updatedCourses.push({
-              id: courseId,
-              title: title,
-              description: description,
-              imageLink: image,
-            });
-          } else {
-            updatedCourses.push(props.courses[i]);
-          }
+      let updatedCourses = [];
+
+      for (let i = 0; i < props.courses.length; i++) {
+        if (props.courses[i].id === courseId) {
+          updatedCourses.push({
+            id: courseId,
+            title: title,
+            description: description,
+            imageLink: image,
+          });
+        } else {
+          updatedCourses.push(props.courses[i]);
         }
-        props.setCourses(updatedCourses);
-        setTitle("");
-        setDescription("");
-        setImage("");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(respone.data.message);
-      });
+      }
+      props.setCourses(updatedCourses);
+      setTitle("");
+      setDescription("");
+      setImage("");
+    } catch (error) {
+      console.log(error);
+      alert(respone.data.message);
+    }
   };
   return (
     <div>

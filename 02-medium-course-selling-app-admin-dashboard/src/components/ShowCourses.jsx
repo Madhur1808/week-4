@@ -7,19 +7,24 @@ function ShowCourses() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/admin/courses", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
+    const fetchCourse = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/admin/courses",
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+
         console.log(response);
         setCourses(response.data.courses);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+    fetchCourse();
   }, []);
 
   // Add code to fetch courses from the server

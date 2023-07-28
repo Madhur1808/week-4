@@ -18,31 +18,30 @@ function CreateCourse({ useremail }) {
 
   console.log({ useremail });
 
-  const addCourseHandler = () => {
-    axios
-      .post(
-        "http://localhost:3000/admin/courses/",
-        {
-          title,
-          description,
-          price: 5999,
-          imageLink: image,
-          published: true,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
+  const addCourseHandler = async () => {
+    try {
+      const response = await axios
+        .post(
+          "http://localhost:3000/admin/courses/",
+          {
+            title,
+            description,
+            price: 5999,
+            imageLink: image,
+            published: true,
           },
-        }
-      )
-      .then((response) => {
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
         // console.log(response);
-        alert(response.data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error.response.data);
-      });
+        .alert(response.data.message);
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data);
+    }
   };
 
   const logoutHandler = () => {
