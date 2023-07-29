@@ -3,6 +3,8 @@ import axios from "axios";
 import { Card, Link, Button, Box, Typography } from "@mui/material";
 import Appbar from "./Appbar";
 
+import { useNavigate } from "react-router-dom";
+
 function ShowCourses() {
   const [courses, setCourses] = useState([]);
 
@@ -30,7 +32,7 @@ function ShowCourses() {
   return (
     <Box>
       <Appbar />
-      <Typography variant="h5" sx={{ marginTop: "90px" }}>
+      <Typography variant="h5" sx={{ marginTop: "90px", textAlign: "center" }}>
         All Courses
       </Typography>
       <Box
@@ -42,6 +44,7 @@ function ShowCourses() {
       >
         {courses.map((c) => (
           <Coursecard
+            id={c.id}
             title={c.title}
             description={c.description}
             image={c.imageLink}
@@ -55,23 +58,40 @@ function ShowCourses() {
 }
 
 export function Coursecard(props) {
-  // console.log(props);
+  const navigate = useNavigate();
+
+  console.log(props);
+
+  const courseHandler = (id) => {
+    navigate(`/course/${id}`);
+  };
   return (
     <Card
       sx={{
-        width: 300,
-        height: 300,
+        width: "250px",
+        minHeight: 200,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
         marginRight: "10px",
-        backgroundImage: `url(${props.image})`,
+        // backgroundImage: `url(${props.image})`,
         backgroundSize: "cover",
+        marginTop: "10px",
       }}
     >
       <Typography textAlign="center">{props.title}</Typography>
       <Typography textAlign="center">{props.description}</Typography>
+      <img src={props.image} height="200px" width="250px" />
+      <Button
+        variant="contained"
+        style={{ margin: 10 }}
+        onClick={() => {
+          courseHandler(props.id);
+        }}
+      >
+        EDIT
+      </Button>
     </Card>
   );
 }

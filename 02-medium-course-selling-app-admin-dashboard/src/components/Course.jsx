@@ -6,7 +6,7 @@ import { TextField, Card, Button, Link, Typography, Box } from "@mui/material";
 
 import axios from "axios";
 import Appbar from "./Appbar";
-import { Coursecard } from "./ShowCourses";
+// import { Coursecard } from "./ShowCourses";
 
 const Course = () => {
   const { courseId } = useParams();
@@ -49,7 +49,7 @@ const Course = () => {
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <Coursecard
+        <CourseDisplay
           title={course.title}
           description={course.description}
           image={course.imageLink}
@@ -60,6 +60,27 @@ const Course = () => {
   );
 };
 
+const CourseDisplay = (props) => {
+  return (
+    <Card
+      sx={{
+        width: "250px",
+        minHeight: 200,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        marginRight: "10px",
+
+        marginTop: "10px",
+      }}
+    >
+      <Typography textAlign="center">{props.title}</Typography>
+      <Typography textAlign="center">{props.description}</Typography>
+      <img src={props.image} height="200px" width="250px" />
+    </Card>
+  );
+};
 const UpdateCard = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
