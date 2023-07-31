@@ -80,9 +80,11 @@ export function Coursecard(props) {
         marginTop: "10px",
       }}
     >
-      <Typography textAlign="center">{props.title}</Typography>
-      <Typography textAlign="center">{props.description}</Typography>
       <img src={props.image} height="200px" width="250px" />
+      <Typography textAlign="center" fontWeight="bold">
+        {props.title}{" "}
+      </Typography>
+      <Typography textAlign="center">{props.description}</Typography>
       <Button
         variant="contained"
         style={{ margin: 10 }}

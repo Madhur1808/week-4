@@ -9,8 +9,7 @@ import {
   AppBar,
   Link,
 } from "@mui/material";
-/// You need to add input boxes to take input for users to create a course.
-/// I've added one input so you understand the api to do it.
+
 function CreateCourse({ useremail }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
